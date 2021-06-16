@@ -11,7 +11,7 @@ class Vaccine {
       [vaccineName]
     );
 
-    console.log(vaccineStoryRes);
+    console.log(`VaccineName = ${vaccineName}`);
 
     // if (!vaccineStoryRes.length)
     //   throw new NotFoundError(`Invalid url parameter of ${vaccineName}`);
