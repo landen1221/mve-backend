@@ -2,22 +2,15 @@
 
 const express = require("express");
 const { BadRequestError } = require("../expressError");
-const Story = require("../models/vaccine");
+const Story = require("../models/story");
 
 const router = express.Router({ mergeParams: true });
 
-router.post("/:vaccineName", async (req, res, next) => {
-  //   res.json({ vaccine: req.params.vaccineName });
-  //   res.send(req.params.vaccineName);
-
+router.post("/", async (req, res) => {
   // TODO: post new story (get data from form)
-
+  console.log("******************");
   const story = await Story.create(req.body);
   return res.status(201).json({ story });
 });
-
-// app.get("/staff/:fname", (req, res) => {
-//   return res.json({ fname: req.params.fname });
-// });
 
 module.exports = router;
