@@ -12,12 +12,8 @@ router.get("/:vaccineName", async (req, res, next) => {
 
   //   TODO: get list of all stories for this vaccine
   const stories = await Vaccine.get(req.params.vaccineName);
-  console.log("this prints!");
+  console.log(stories);
   return res.json({ stories });
 });
-
-// app.get("/staff/:fname", (req, res) => {
-//   return res.json({ fname: req.params.fname });
-// });
 
 module.exports = router;
