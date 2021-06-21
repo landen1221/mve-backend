@@ -8,7 +8,6 @@ const router = express.Router({ mergeParams: true });
 
 router.get("/", async (req, res, next) => {
   let stats = await Vaccine.getStats();
-  console.log(stats);
   return res.json({ stats });
 });
 
