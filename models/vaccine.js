@@ -22,7 +22,7 @@ class Vaccine {
         `SELECT COUNT(story_id) FROM stories WHERE vaccine='${vaccine}'`
       );
       const satsifiedCount = await db.query(
-        `SELECT COUNT(story_id) FROM stories WHERE vaccine='${vaccine}' AND satisfied='true'`
+        `SELECT COUNT(story_id) FROM stories WHERE vaccine='${vaccine}' AND satisfied='Yes'`
       );
       percentages[vaccine] =
         Math.round(
