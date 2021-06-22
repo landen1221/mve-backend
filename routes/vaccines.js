@@ -6,9 +6,6 @@ const Vaccine = require("../models/vaccine");
 
 const router = express.Router({ mergeParams: true });
 
-// example url query:
-// myvaccineexprience.org/vaccine/pfizer?gender=male&minAge=20&maxAge=30&satisfied=true
-
 router.get("/", async (req, res, next) => {
   let stats = await Vaccine.getStats();
   return res.json({ stats });

@@ -13,6 +13,19 @@ class Story {
     );
     return `Story successfully added for ${username}`;
   }
+
+  // SELECT * FROM stories WHERE story ILIKE '%after%worth%it%'
+  static async search(queryString) {
+    let sqlReady = `%${queryString.split(" ").join("%")}%`;
+    const results = await db.query(
+      `SELECT * FROM stories WHERE story ILIKE '${sqlReady}'`
+    );
+    let final = {};
+    final["meta"] = { query: queryString };
+    final["stories"] = results.rows;
+
+    return final;
+  }
 }
 
 module.exports = Story;

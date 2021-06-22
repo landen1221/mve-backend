@@ -12,4 +12,14 @@ router.post("/", async (req, res) => {
   return res.status(201).json({ story });
 });
 
+// example url http://localhost:3001/story/search?q=worth+it
+// example url myvaccineexprience.org/story/search?q=worth+it
+
+router.get("/search", async (req, res) => {
+  console.log(req.query.q);
+  const results = await Story.search(req.query.q);
+  console.log(results);
+  return res.status(201).json({ results });
+});
+
 module.exports = router;
