@@ -11,12 +11,13 @@ class Vaccine {
     );
 
     console.log(`VaccineName = ${vaccineName}`);
+
     return vaccineStoryRes.rows;
   }
 
   static async getStats() {
     const vaccines = ["pfizer", "astrazeneca", "moderna", "johnsonandjohnson"];
-    let percentages = {};
+    let stats = {};
     for (let vaccine of vaccines) {
       const all = await db.query(
         `SELECT COUNT(story_id) FROM stories WHERE vaccine='${vaccine}'`
@@ -24,17 +25,23 @@ class Vaccine {
       const satsifiedCount = await db.query(
         `SELECT COUNT(story_id) FROM stories WHERE vaccine='${vaccine}' AND satisfied='Yes'`
       );
-      percentages[vaccine] =
+      stats[vaccine] =
         Math.round(
           (satsifiedCount.rows[0].count / all.rows[0].count) * 100 * 100
         ) / 100;
     }
 
-    const countAll = await db.query(
+    const countVaccine = await db.query(
+      `SELECT COUNT(*) FROM stories WHERE NOT vaccine='covid';`
+    );
+
+    const countCOVID = await db.query(
       `SELECT satisfied, COUNT(*) FROM stories WHERE vaccine='covid' GROUP BY satisfied;`
     );
-    percentages["covid"] = countAll.rows;
-    return percentages;
+
+    stats["vaccineCount"] = countVaccine.rows[0].count;
+    stats["covid"] = countCOVID.rows;
+    return stats;
   }
 }
 

@@ -7,7 +7,6 @@ const Story = require("../models/story");
 const router = express.Router({ mergeParams: true });
 
 router.post("/", async (req, res) => {
-  // TODO: post new story (get data from form)
   const story = await Story.create(req.body);
   return res.status(201).json({ story });
 });
@@ -18,7 +17,6 @@ router.post("/", async (req, res) => {
 router.get("/search", async (req, res) => {
   console.log(req.query.q);
   const results = await Story.search(req.query.q);
-  console.log(results);
   return res.status(201).json({ results });
 });
 
