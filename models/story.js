@@ -5,6 +5,7 @@ const db = require("../db");
 class Story {
   static async create(data) {
     const { username, vaccine, satisfied, age, gender, story } = data;
+
     const vaccineLowerCase = vaccine.toLowerCase();
     try {
       const result = await db.query(

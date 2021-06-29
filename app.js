@@ -17,7 +17,8 @@ app.use(function (req, res, next) {
   return next(new NotFoundError());
 });
 
-app.use(function (err, req, res, next) {
+// Generic error handler
+app.use(function (err, req, res) {
   if (process.env.NODE_ENV !== "test") console.error(err.stack);
   const status = err.status || 500;
   const message = err.message;
