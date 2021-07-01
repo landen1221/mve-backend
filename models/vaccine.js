@@ -10,8 +10,6 @@ class Vaccine {
       [vaccineName]
     );
 
-    console.log(`VaccineName = ${vaccineName}`);
-
     return vaccineStoryRes.rows;
   }
 

@@ -36,7 +36,6 @@ describe("create stories", () => {
 
   test("Creates valid story", async () => {
     let story = await Story.create(newStory1);
-    console.log(story);
     expect(story).toEqual(`Story successfully added for ${newStory1.username}`);
   });
 

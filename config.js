@@ -15,12 +15,6 @@ function getDatabaseUri() {
     : process.env.DATABASE_URL || "my_vaccine_experience";
 }
 
-console.log("Jobly Config:".green);
-console.log("SECRET_KEY:".yellow, SECRET_KEY);
-console.log("PORT:".yellow, PORT.toString());
-console.log("Database:".yellow, getDatabaseUri());
-console.log("---");
-
 module.exports = {
   SECRET_KEY,
   PORT,

@@ -15,7 +15,6 @@ router.post("/", async (req, res) => {
 // example url myvaccineexprience.org/story/search?q=worth+it
 
 router.get("/search", async (req, res) => {
-  console.log(req.query.q);
   const results = await Story.search(req.query.q);
   return res.status(201).json({ results });
 });
