@@ -14,12 +14,12 @@ app.use("/vaccine", vaccineRoutes);
 app.use("/story", storyRoute);
 
 app.use(function (req, res, next) {
-  console.log("*******************************************************");
+  console.log("**************************************");
   return next(new NotFoundError());
 });
 
 // Generic error handler
-app.use(function (err, req, res) {
+app.use(function (err, req, res, next) {
   if (process.env.NODE_ENV !== "test") console.error(err.stack);
   const status = err.status || 500;
   const message = err.message;
