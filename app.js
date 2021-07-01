@@ -14,6 +14,7 @@ app.use("/vaccine", vaccineRoutes);
 app.use("/story", storyRoute);
 
 app.use(function (req, res, next) {
+  console.log("*******************************************************");
   return next(new NotFoundError());
 });
 
