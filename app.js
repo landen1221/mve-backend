@@ -4,14 +4,17 @@ const cors = require("cors");
 const { NotFoundError } = require("./expressError");
 const vaccineRoutes = require("./routes/vaccines");
 const storyRoute = require("./routes/story");
+const adminRoute = require("./routes/admin");
 
 process.env.NODE_ENV = "development";
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+
 app.use("/vaccine", vaccineRoutes);
 app.use("/story", storyRoute);
+app.use("/admin", adminRoute);
 
 app.use(function (req, res, next) {
   console.log("**************************************");

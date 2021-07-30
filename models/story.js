@@ -14,7 +14,7 @@ class Story {
       );
       return `Story successfully added for ${username}`;
     } catch (err) {
-      return "Duplicate username submitted";
+      return err;
     }
   }
 
@@ -22,7 +22,7 @@ class Story {
   static async search(queryString) {
     let sqlReady = `%${queryString.split(" ").join("%")}%`;
     const results = await db.query(
-      `SELECT * FROM stories WHERE story ILIKE '${sqlReady}' OR username ILIKE '${sqlReady}'`
+      `SELECT * FROM stories WHERE story ILIKE '${sqlReady}' OR username ILIKE '${sqlReady}' AND visability='t'`
     );
     let final = {};
     final["meta"] = { query: queryString };

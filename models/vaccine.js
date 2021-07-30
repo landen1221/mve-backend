@@ -3,10 +3,11 @@
 const db = require("../db");
 
 class Vaccine {
+  // get all stories
   static async get(vaccineName) {
     vaccineName = vaccineName.toLowerCase();
     const vaccineStoryRes = await db.query(
-      `SELECT * FROM stories WHERE vaccine=$1`,
+      `SELECT * FROM stories WHERE vaccine=$1 AND visability='t'`,
       [vaccineName]
     );
 
@@ -18,10 +19,10 @@ class Vaccine {
     let stats = {};
     for (let vaccine of vaccines) {
       const all = await db.query(
-        `SELECT COUNT(story_id) FROM stories WHERE vaccine='${vaccine}'`
+        `SELECT COUNT(story_id) FROM stories WHERE vaccine='${vaccine}' AND visability='t';`
       );
       const satsifiedCount = await db.query(
-        `SELECT COUNT(story_id) FROM stories WHERE vaccine='${vaccine}' AND satisfied='Yes'`
+        `SELECT COUNT(story_id) FROM stories WHERE vaccine='${vaccine}' AND satisfied='Yes' AND visability='t';`
       );
       stats[vaccine] =
         Math.round(
@@ -30,11 +31,11 @@ class Vaccine {
     }
 
     const countVaccine = await db.query(
-      `SELECT COUNT(*) FROM stories WHERE NOT vaccine='covid';`
+      `SELECT COUNT(*) FROM stories WHERE NOT vaccine='covid'AND visability='t';`
     );
 
     const countCOVID = await db.query(
-      `SELECT satisfied, COUNT(*) FROM stories WHERE vaccine='covid' GROUP BY satisfied;`
+      `SELECT satisfied, COUNT(*) FROM stories WHERE vaccine='covid' AND visability='t' GROUP BY satisfied ;`
     );
 
     stats["vaccineCount"] = countVaccine.rows[0].count;
