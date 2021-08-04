@@ -30,6 +30,44 @@ class Story {
 
     return final;
   }
+
+  static async addFlag(story_id) {
+    try {
+      const getNum = await db.query(
+        `SELECT flagCount FROM stories WHERE story_id=$1;`,
+        [story_id]
+      );
+      let newTotal = getNum.rows[0]["flagcount"] + 1;
+
+      await db.query(`UPDATE stories SET flagCount=$1 WHERE story_id=$2;`, [
+        newTotal,
+        story_id,
+      ]);
+
+      return newTotal;
+    } catch (err) {
+      return err;
+    }
+  }
+
+  static async subtractFlag(story_id) {
+    try {
+      const getNum = await db.query(
+        `SELECT flagCount FROM stories WHERE story_id=$1;`,
+        [story_id]
+      );
+      let newTotal = getNum.rows[0]["flagcount"] - 1;
+
+      await db.query(`UPDATE stories SET flagCount=$1 WHERE story_id=$2;`, [
+        newTotal,
+        story_id,
+      ]);
+
+      return newTotal;
+    } catch (err) {
+      return err;
+    }
+  }
 }
 
 module.exports = Story;

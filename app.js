@@ -5,6 +5,7 @@ const { NotFoundError } = require("./expressError");
 const vaccineRoutes = require("./routes/vaccines");
 const storyRoute = require("./routes/story");
 const adminRoute = require("./routes/admin");
+const { authenticateJWT } = require("./middleware/auth");
 
 process.env.NODE_ENV = "development";
 
@@ -14,10 +15,13 @@ app.use(express.json());
 
 app.use("/vaccine", vaccineRoutes);
 app.use("/story", storyRoute);
+
+// FIXME: AuthenticateJWT not working
+app.use(authenticateJWT);
 app.use("/admin", adminRoute);
 
 app.use(function (req, res, next) {
-  console.log("**************************************");
+  console.log("***********************************");
   return next(new NotFoundError());
 });
 

@@ -11,4 +11,10 @@ CREATE TABLE stories (
     created_at TIMESTAMP  DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE users (
+    username TEXT NOT NULL PRIMARY KEY,
+    password TEXT NOT NULL,
+    is_admin BOOLEAN DEFAULT false
+);
+
 

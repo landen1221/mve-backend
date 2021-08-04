@@ -27,4 +27,22 @@ router.get("/search", async (req, res, next) => {
   }
 });
 
+router.post("/addflag/:storyID", async (req, res, next) => {
+  try {
+    const flagCount = await Story.addFlag(req.params.storyID);
+    return res.status(201).json({ flagCount });
+  } catch (err) {
+    return next(err);
+  }
+});
+
+router.post("/subtractflag/:storyID", async (req, res, next) => {
+  try {
+    const flagCount = await Story.subtractFlag(req.params.storyID);
+    return res.status(201).json({ flagCount });
+  } catch (err) {
+    return next(err);
+  }
+});
+
 module.exports = router;
