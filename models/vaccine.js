@@ -7,7 +7,7 @@ class Vaccine {
   static async get(vaccineName, fingerprint) {
     vaccineName = vaccineName.toLowerCase();
     const vaccineStoryRes = await db.query(
-      `SELECT * FROM stories WHERE vaccine=$1 AND visability='t' ORDER BY created_at DESC`,
+      `SELECT * FROM stories WHERE vaccine=$1 AND visability='t' ORDER BY created_at ASC`,
       [vaccineName]
     );
 

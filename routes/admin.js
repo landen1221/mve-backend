@@ -12,29 +12,26 @@ const { ensureLoggedIn } = require("../middleware/auth");
 const router = express.Router({ mergeParams: true });
 
 // FIXME: uncomment ensureLoggedIn
-router.get(
-  "/flagged",
-  /*ensureLoggedIn,*/ async (req, res, next) => {
-    try {
-      const results = await Admin.getFlaggedStories();
-      return res.status(201).json({ results });
-    } catch (err) {
-      return next(err);
-    }
+router.get("/flagged", async (req, res, next) => {
+  try {
+    const results = await Admin.getFlaggedStories();
+    return res.status(201).json({ results });
+  } catch (err) {
+    return next(err);
   }
-);
+});
+
 // FIXME: uncomment ensureLoggedIn
-router.get(
-  "/all",
-  /*ensureLoggedIn,*/ async (req, res, next) => {
-    try {
-      const results = await Admin.getAllStories();
-      return res.status(201).json({ results });
-    } catch (err) {
-      return next(err);
-    }
+router.get("/all", ensureLoggedIn, async (req, res, next) => {
+  console.log("*-*-*-*-*-");
+  console.log(req.headers);
+  try {
+    const results = await Admin.getAllStories();
+    return res.status(201).json({ results });
+  } catch (err) {
+    return next(err);
   }
-);
+});
 
 // FIXME: not sure if this is needed
 router.post("/register", async (req, res, next) => {
@@ -61,11 +58,11 @@ router.post("/login", async (req, res, next) => {
     if (!username || !password) {
       throw new ExpressError("Username and password required", 400);
     }
-
+    console.log(1);
     const user = await Admin.getAdmin(username);
-
+    console.log(user);
     const success = await bcrypt.compare(password, user.password);
-
+    console.log(3);
     if (success) {
       let token = jwt.sign({ username }, SECRET_KEY);
       return res.json({ message: "Logged In", token });
@@ -77,20 +74,16 @@ router.post("/login", async (req, res, next) => {
   }
 });
 
-//FIXME: visability change not currently working
 // checked example: {"story_5":true,"story_6":true,"story_4":false}
 // Don't need story_ when pulling id
-router.post(
-  "/update",
-  /*ensureLoggedIn,*/ async (req, res, next) => {
-    try {
-      const { checked } = req.body;
-      let parsedChecked = JSON.parse(checked);
-      await Admin.changeVisability(parsedChecked);
-    } catch (err) {
-      return next(err);
-    }
+router.post("/update", ensureLoggedIn, async (req, res, next) => {
+  try {
+    const { checked } = req.body;
+    let parsedChecked = JSON.parse(checked);
+    await Admin.changeVisability(parsedChecked);
+  } catch (err) {
+    return next(err);
   }
-);
+});
 
 module.exports = router;
