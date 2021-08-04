@@ -85,7 +85,6 @@ router.post(
   /*ensureLoggedIn,*/ async (req, res, next) => {
     try {
       const { checked } = req.body;
-      console.log(checked);
       let parsedChecked = JSON.parse(checked);
       await Admin.changeVisability(parsedChecked);
     } catch (err) {

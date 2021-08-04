@@ -30,7 +30,7 @@ class Admin {
   static async addAdmin(username, password) {
     try {
       await db.query(
-        `INSERT INTO users (username, password) VALUES ($1, $2);`,
+        `INSERT INTO admin (username, password) VALUES ($1, $2);`,
         [username, password]
       );
       return "Success";
@@ -42,7 +42,7 @@ class Admin {
   static async getAdmin(username) {
     try {
       const results = await db.query(
-        `SELECT username, password FROM users WHERE username=$1;`,
+        `SELECT username, password FROM admin WHERE username=$1;`,
         [username]
       );
       const user = results.rows[0];
@@ -55,14 +55,11 @@ class Admin {
     }
   }
 
-  // FIXME: likely not efficient, but won't take in a large dataset with current setup (stories are selected manually)
+  // FIXME: likely not efficient, but won't take in a large dataset with current setup (since tories are selected manually)
   static async changeVisability(parsedChecked) {
     try {
-      console.log("this prints!!!@#@!#");
       for (let story in parsedChecked) {
         let changeVisability = !parsedChecked[story];
-        console.log(changeVisability);
-        console.log(story[story.length - 1]);
         await db.query(`UPDATE stories SET visability=$1 WHERE story_id=$2;`, [
           changeVisability,
           story.split("_")[1],

@@ -27,18 +27,20 @@ router.get("/search", async (req, res, next) => {
   }
 });
 
-router.post("/addflag/:storyID", async (req, res, next) => {
+router.post("/addflag/:storyID/:fingerprint", async (req, res, next) => {
   try {
-    const flagCount = await Story.addFlag(req.params.storyID);
+    const { storyID, fingerprint } = req.params;
+    const flagCount = await Story.addFlag(fingerprint, storyID);
     return res.status(201).json({ flagCount });
   } catch (err) {
     return next(err);
   }
 });
 
-router.post("/subtractflag/:storyID", async (req, res, next) => {
+router.post("/subtractflag/:storyID/:fingerprint", async (req, res, next) => {
   try {
-    const flagCount = await Story.subtractFlag(req.params.storyID);
+    const { storyID, fingerprint } = req.params;
+    const flagCount = await Story.subtractFlag(fingerprint, storyID);
     return res.status(201).json({ flagCount });
   } catch (err) {
     return next(err);

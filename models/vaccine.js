@@ -3,15 +3,24 @@
 const db = require("../db");
 
 class Vaccine {
-  // get all stories
-  static async get(vaccineName) {
+  // FIXME: Add fingerprint
+  static async get(vaccineName, fingerprint) {
     vaccineName = vaccineName.toLowerCase();
     const vaccineStoryRes = await db.query(
-      `SELECT * FROM stories WHERE vaccine=$1 AND visability='t'`,
+      `SELECT * FROM stories WHERE vaccine=$1 AND visability='t' ORDER BY created_at DESC`,
       [vaccineName]
     );
 
-    return vaccineStoryRes.rows;
+    const flaggedStories = await db.query(
+      `SELECT story_id FROM user_flags WHERE fingerprint=$1`,
+      [fingerprint]
+    );
+
+    const flaggedStoriesArray = flaggedStories.rows.map(
+      (story) => story["story_id"]
+    );
+
+    return { stories: vaccineStoryRes.rows, flaggedStoriesArray };
   }
 
   static async getStats() {

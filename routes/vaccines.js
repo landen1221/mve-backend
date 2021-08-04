@@ -17,10 +17,12 @@ router.get("/", async (req, res, next) => {
 });
 
 // get list of all vaccine stories by name
-router.get("/:vaccineName", async (req, res, next) => {
-  // TODO: get list of all stories for this vaccine
+// FIXME: Add fingerprint
+router.get("/:vaccineName/:fingerprint", async (req, res, next) => {
   try {
-    const stories = await Vaccine.get(req.params.vaccineName);
+    console.log(req.params);
+    const { vaccineName, fingerprint } = req.params;
+    const stories = await Vaccine.get(vaccineName, fingerprint);
     return res.json({ stories });
   } catch (err) {
     return next(err);
