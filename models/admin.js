@@ -55,7 +55,7 @@ class Admin {
     }
   }
 
-  // FIXME: likely not efficient, but won't take in a large dataset with current setup (since tories are selected manually)
+  // Likely not efficient, but sufficient since we're never working with a large dataset with current setup (stories are manually selected)
   static async changeVisability(parsedChecked) {
     try {
       for (let story in parsedChecked) {

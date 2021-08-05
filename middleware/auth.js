@@ -10,7 +10,6 @@ function authenticateJWT(req, res, next) {
       req.body._token || req.headers.authorization.split(" ")[1],
       SECRET_KEY
     );
-    console.log("so does this");
     req.user = payload;
     return next();
   } catch (err) {

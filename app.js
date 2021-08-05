@@ -16,7 +16,6 @@ app.use(express.json());
 app.use("/vaccine", vaccineRoutes);
 app.use("/story", storyRoute);
 
-// FIXME: AuthenticateJWT not working
 app.use(authenticateJWT);
 app.use("/admin", adminRoute);
 

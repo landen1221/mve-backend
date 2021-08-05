@@ -11,7 +11,6 @@ const { ensureLoggedIn } = require("../middleware/auth");
 
 const router = express.Router({ mergeParams: true });
 
-// FIXME: uncomment ensureLoggedIn
 router.get("/flagged", async (req, res, next) => {
   try {
     const results = await Admin.getFlaggedStories();
@@ -21,10 +20,7 @@ router.get("/flagged", async (req, res, next) => {
   }
 });
 
-// FIXME: uncomment ensureLoggedIn
 router.get("/all", ensureLoggedIn, async (req, res, next) => {
-  console.log("*-*-*-*-*-");
-  console.log(req.headers);
   try {
     const results = await Admin.getAllStories();
     return res.status(201).json({ results });
@@ -33,7 +29,6 @@ router.get("/all", ensureLoggedIn, async (req, res, next) => {
   }
 });
 
-// FIXME: not sure if this is needed
 router.post("/register", async (req, res, next) => {
   try {
     const { username, password } = req.body;
@@ -58,11 +53,8 @@ router.post("/login", async (req, res, next) => {
     if (!username || !password) {
       throw new ExpressError("Username and password required", 400);
     }
-    console.log(1);
     const user = await Admin.getAdmin(username);
-    console.log(user);
     const success = await bcrypt.compare(password, user.password);
-    console.log(3);
     if (success) {
       let token = jwt.sign({ username }, SECRET_KEY);
       return res.json({ message: "Logged In", token });

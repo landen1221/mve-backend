@@ -3,7 +3,6 @@
 const db = require("../db");
 
 class Vaccine {
-  // FIXME: Add fingerprint
   static async get(vaccineName, fingerprint) {
     vaccineName = vaccineName.toLowerCase();
     const vaccineStoryRes = await db.query(
