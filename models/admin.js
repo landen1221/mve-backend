@@ -39,10 +39,11 @@ class Admin {
     }
   }
 
+  // For login
   static async getAdmin(username) {
     try {
       const results = await db.query(
-        `SELECT username, password FROM admin WHERE username=$1;`,
+        `SELECT username, password FROM admin WHERE username=$1 AND is_admin=true;`,
         [username]
       );
       const user = results.rows[0];

@@ -17,6 +17,7 @@ function authenticateJWT(req, res, next) {
   }
 }
 
+// also authenticates is_admin=true
 function ensureLoggedIn(req, res, next) {
   try {
     if (!req.user) throw new UnauthorizedError();
