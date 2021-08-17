@@ -18,9 +18,10 @@ router.post("/", async (req, res, next) => {
 // example url http://localhost:3001/story/search?q=worth+it
 // example url myvaccineexprience.org/story/search?q=worth+it
 
-router.get("/search", async (req, res, next) => {
+router.get("/:fingerprint/search", async (req, res, next) => {
   try {
-    const results = await Story.search(req.query.q);
+    const { fingerprint } = req.params;
+    const results = await Story.search(req.query.q, fingerprint);
     return res.status(201).json({ results });
   } catch (err) {
     return next(err);

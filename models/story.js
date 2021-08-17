@@ -30,14 +30,25 @@ class Story {
   }
 
   // SELECT * FROM stories WHERE story ILIKE '%after%worth%it%'
-  static async search(queryString) {
+  static async search(queryString, fingerprint) {
     let sqlReady = `%${queryString.split(" ").join("%")}%`;
     const results = await db.query(
       `SELECT * FROM stories WHERE story ILIKE '${sqlReady}' OR username ILIKE '${sqlReady}' AND visability='t'`
     );
+
+    const flaggedStories = await db.query(
+      `SELECT story_id FROM user_flags WHERE fingerprint=$1`,
+      [fingerprint]
+    );
+
+    const flaggedStoriesArray = flaggedStories.rows.map(
+      (story) => story["story_id"]
+    );
+
     let final = {};
     final["meta"] = { query: queryString };
     final["stories"] = results.rows;
+    final["flaggedStoriesArray"] = flaggedStoriesArray;
 
     return final;
   }
